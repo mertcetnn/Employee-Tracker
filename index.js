@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const inquirer = require("inquirer");
 const consoleTbl = require("console.table");
 
@@ -36,21 +36,70 @@ function choices() {
       ],
     })
     .then(function (respond) {
-      if (message.choices === "View all employees") {
-        showEmployees();}
-        break;
-        if (message.choices === 'View all departments' ) {
-            showDepartmans();}
-            break;
-            if (message.choices ===   'View all roles') {
-                showRoles();}
-                break;
-                if (message.choices ===   'Add an employee') {
-                    addEmployee();}
-                break;
-                
-            
-        
-      
-    );
+      // SEARCH ALL ACTIONS AND CHANGES CASES FOR SITUATION
+      switch (respond.action) {
+        case "View all employees":
+          showEmployees();
+          break;
+        case "View all departments":
+          showDepartments();
+          break;
+        case "View all roles":
+          showRoles();
+          break;
+        case "Add an employee":
+          addEmployee();
+          break;
+        case "Add a department":
+          addDepartment();
+          break;
+        case "Add a role":
+          addRole();
+          break;
+        case "Update employee role":
+          updateRole();
+          break;
+        case "Delete an employee":
+          deleteEmployee();
+          break;
+        case "EXIT":
+          exitApp();
+          break;
+        // AFTER ALL LASST VIEW
+        default:
+          break;
+      }
+    });
+}
+
+function showDepartments() {
+  // WHEN FUNCTION CALLED
+  // RUN WISH WICH EQUAL TO MYSQL COMMENT
+  const wish = "SELECT * FROM department";
+  // query() of mysql.Connection THEN USE WISH AND GET RESPOND THEN CHECK ERROR
+  connection.query(wish, function (err, res) {
+    if (err == true) {
+      throw err;
+    }
+
+    console.table("Departments", res);
+    choices();
+  });
+}
+
+function showEmployees() {
+  // WHEN FUNCTION CALLED
+  // RUN WISH WICH EQUAL TO MYSQL COMMENT
+  const wish = "SELECT * FROM employee";
+  // query() of mysql.Connection THEN USE WISH AND GET RESPOND THEN CHECK ERROR
+  connection.query(wish, function (err, res) {
+    if (err == true) {
+      throw err;
+    }
+    //
+    console.log(res.length + "Here is your team!");
+
+    console.table("All Employees:", res);
+    choices();
+  });
 }
