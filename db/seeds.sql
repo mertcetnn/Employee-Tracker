@@ -1,5 +1,7 @@
 USE employees_db;
 
+ -- INSERT INTO table(column1, column2,...)
+-- VALUES (value1, value2,...);
 INSERT INTO  department(name)
 VALUES
 ('HUMAN RESOURCES'),

@@ -70,49 +70,54 @@ function choices() {
           break;
       }
     });
+}
 
-  function showDepartments() {
-    // WHEN FUNCTION CALLED
-    // RUN WISH WICH EQUAL TO MYSQL COMMENT
-    const wish = "SELECT * FROM  department";
-    // query() of mysql.Connection THEN USE WISH AND GET RESPOND THEN CHECK ERROR
-    connection.query(wish, function (err, res) {
-      if (err == true) {
-        throw err;
-      }
+function showDepartments() {
+  // WHEN FUNCTION CALLED
+  // RUN WISH WICH EQUAL TO MYSQL COMMENT
+  const wish = "SELECT * FROM  department";
+  // query() of mysql.Connection THEN USE WISH AND GET RESPOND THEN CHECK ERROR
+  connection.query(wish, function (err, res) {
+    if (err == true) {
+      throw err;
+    }
 
-      console.table("Departments", res);
-      choices();
-    });
-  }
+    console.table("Departments", res);
+    choices();
+  });
+}
 
-  function showEmployees() {
-    // WHEN FUNCTION CALLED
-    // RUN WISH WICH EQUAL TO MYSQL COMMENT
-    const wish = "SELECT * FROM employee";
-    // query() of mysql.Connection THEN USE WISH AND GET RESPOND THEN CHECK ERROR
-    connection.query(wish, function (err, res) {
-      if (err == true) {
-        throw err;
-      }
-      // SHOWS OUR RESPONDED LENGTH
-      console.log(res.length + "Here is your team!");
-      //     WILL SHOw Our data about employee
+function showEmployees() {
+  con.connect(function (err) {
+    if (err) throw err;
+    con.query("SELECT * FROM employee", function (err, res) {
+      if (err) throw err;
+      console.log(result);
       console.table("All Employees:", res);
       choices();
     });
-  }
+  });
+}
 
-  // view all roles in the database
-  function showRoles() {
-    var wish = "SELECT * FROM role";
-    connection.query(wish, function (err, res) {
-      if (err == true) {
-        throw err;
-      }
+function showDepartments() {
+  con.connect(function (err) {
+    if (err) throw err;
+    con.query("SELECT * FROM Departments", function (err, res) {
+      if (err) throw err;
+      console.log(result);
+      console.table("All Deaprtments:", res);
+      choices();
+    });
+  });
+}
+function showRoles() {
+  con.connect(function (err) {
+    if (err) throw err;
+    con.query("SELECT * FROM Role", function (err, res) {
+      if (err) throw err;
+      console.log(result);
       console.table("All Roles:", res);
       choices();
     });
-  }
+  });
 }
-choices();
