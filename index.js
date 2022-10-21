@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const consoleTbl = require("console.table");
 
 // THIS PART HELPS US TO CONNECT OUR LOCAL HOST
-const connection = mysql.createConnection({
+const con = mysql.createConnection({
   host: "localhost",
   port: 3301,
   user: "root",
@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
   database: "employees_db",
 });
 
-connection.connect((err) => {
+con.connect((err) => {
   if (err == true) {
     throw err;
   }
@@ -72,21 +72,6 @@ function choices() {
     });
 }
 
-function showDepartments() {
-  // WHEN FUNCTION CALLED
-  // RUN WISH WICH EQUAL TO MYSQL COMMENT
-  const wish = "SELECT * FROM  department";
-  // query() of mysql.Connection THEN USE WISH AND GET RESPOND THEN CHECK ERROR
-  connection.query(wish, function (err, res) {
-    if (err == true) {
-      throw err;
-    }
-
-    console.table("Departments", res);
-    choices();
-  });
-}
-
 function showEmployees() {
   con.connect(function (err) {
     if (err) throw err;
@@ -120,4 +105,34 @@ function showRoles() {
       choices();
     });
   });
+}
+
+function addEmployee() {
+  con.connect(function (err) {
+    if (err) throw err;
+    con.query("SELECT * FROM Role", function (err, res) {
+      if (err) throw err;
+      inquirer.prompt([
+        {
+
+        name: 'first_name',
+        type: 'input', 
+        message: "What is the employee's fist name? "},
+        {
+
+          name: 'last_name',
+          type: 'input', 
+          message: "What is the employee's last name? "},
+          {
+            name: 'manager_id',
+            type: 'input', 
+            message: "What is the employee's manager's ID? "
+        },
+  
+    ])
+
+
+
+
+
 }
