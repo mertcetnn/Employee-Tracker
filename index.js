@@ -162,3 +162,48 @@ function addRole() {
       });
   });
 }
+
+function addEmployee() {
+  con.connect(function (err) {
+    inquirer
+      .prompt([
+        {
+          name: "first_name",
+          type: "input",
+          message: "What is the employee's fist name? ",
+        },
+        {
+          name: "last_name",
+          type: "input",
+          message: "What is the employee's last name? ",
+        },
+        {
+          name: "manager_id",
+          type: "input",
+          message: "What is the employee's manager's ID? ",
+        },
+        {
+          name: "role",
+          type: "list",
+          choices: function () {
+            var roleArray = [];
+            for (let i = 0; i < res.length; i++) {
+              roleArray.push(res[i].title);
+            }
+            return roleArray;
+          },
+          message: "What is this employee's role? ",
+        },
+      ])
+      .then((data) => {
+        con.query(
+          "INSERT INTO  employee (first_name, last_name ,manager_id,role) VALUES (?,?,?)",
+          [data.addRole, data.addSalary, data.addDepartmentId],
+          function (err, res) {
+            if (err) throw err;
+            choices();
+          }
+        );
+      });
+  });
+}
