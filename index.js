@@ -5,7 +5,6 @@ const consoleTbl = require("console.table");
 // THIS PART HELPS US TO CONNECT OUR LOCAL HOST
 const con = mysql.createConnection({
   host: "localhost",
-  port: 3301,
   user: "root",
   password: "password",
   database: "employees_db",
@@ -37,7 +36,7 @@ function choices() {
     })
     .then(function (respond) {
       // SEARCH ALL ACTIONS AND CHANGES CASES FOR SITUATION
-      switch (respond.action) {
+      switch (respond.greeting) {
         case "View all employees":
           showEmployees();
           break;
@@ -77,7 +76,7 @@ function showEmployees() {
     if (err) throw err;
     con.query("SELECT * FROM employee", function (err, res) {
       if (err) throw err;
-      console.log(result);
+
       console.table("All Employees:", res);
       choices();
     });
@@ -87,10 +86,10 @@ function showEmployees() {
 function showDepartments() {
   con.connect(function (err) {
     if (err) throw err;
-    con.query("SELECT * FROM Departments", function (err, res) {
+    con.query("SELECT * FROM department", function (err, res) {
       if (err) throw err;
-      console.log(result);
-      console.table("All Deaprtments:", res);
+
+      console.table("All department:", res);
       choices();
     });
   });
@@ -98,41 +97,68 @@ function showDepartments() {
 function showRoles() {
   con.connect(function (err) {
     if (err) throw err;
-    con.query("SELECT * FROM Role", function (err, res) {
+    con.query("SELECT * FROM role", function (err, res) {
       if (err) throw err;
-      console.log(result);
+
       console.table("All Roles:", res);
       choices();
     });
   });
 }
+choices();
 
-function addEmployee() {
+function addDepartment() {
   con.connect(function (err) {
-    if (err) throw err;
-    con.query("SELECT * FROM Role", function (err, res) {
-      if (err) throw err;
-      inquirer.prompt([
+    inquirer
+      .prompt([
         {
-
-        name: 'first_name',
-        type: 'input', 
-        message: "What is the employee's fist name? "},
-        {
-
-          name: 'last_name',
-          type: 'input', 
-          message: "What is the employee's last name? "},
-          {
-            name: 'manager_id',
-            type: 'input', 
-            message: "What is the employee's manager's ID? "
+          name: "addDepartment",
+          type: "input",
+          message: "Which Department would you like to add?",
         },
-  
-    ])
+      ])
+      .then((data) => {
+        con.query(
+          "INSERT INTO  department (name) VALUES (?)",
+          data.addDepartment,
+          function (err, res) {
+            if (err) throw err;
+            choices();
+          }
+        );
+      });
+  });
+}
 
-
-
-
-
+function addRole() {
+  con.connect(function (err) {
+    inquirer
+      .prompt([
+        {
+          name: "addRole",
+          type: "input",
+          message: "What is your role in company?",
+        },
+        {
+          name: "addSalary",
+          type: "input",
+          message: "What is your salary incompany?",
+        },
+        {
+          name: "addDepartmentId",
+          type: "input",
+          message: "What is your Deaprtment ID??",
+        },
+      ])
+      .then((data) => {
+        con.query(
+          "INSERT INTO  role (title, salary ,department_id) VALUES (?,?,?)",
+          [data.addRole, data.addSalary, data.addDepartmentId],
+          function (err, res) {
+            if (err) throw err;
+            choices();
+          }
+        );
+      });
+  });
 }

@@ -1,14 +1,11 @@
 
    
+DROP DATABASE IF EXISTS employees_db;
+CREATE DATABASE employees_db;
  
 
-CREATE DATABASE employees_db;
-  DROP DATABASE IF EXISTS employees_db;
-
 USE employees_db;
-   
-   
-   
+
    -- Creates Tables
 
 
@@ -20,7 +17,7 @@ USE employees_db;
 
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(20) NOT NULL,
+    title VARCHAR(40) NOT NULL,
     salary DECIMAL NOT NULL,
     department_id INT NOT NULL,
     PRIMARY KEY (id)
@@ -37,4 +34,3 @@ CREATE TABLE employee(
     
 
 
-)
