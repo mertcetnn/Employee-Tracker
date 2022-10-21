@@ -207,3 +207,19 @@ function addEmployee() {
       });
   });
 }
+function updateRole() {
+  //update statment
+  let sql = `UPDATE role
+           SET completed = ?
+           WHERE id = ?`;
+
+  con.query(
+    `UPDATE role
+           SET (title, salary ,department_id) = ?
+           WHERE department_id = ?`
+  );
+}
+//exit the app
+function exitApp() {
+  connection.end();
+}
