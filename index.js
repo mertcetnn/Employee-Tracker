@@ -39,6 +39,7 @@ function choices() {
       // SEARCH ALL ACTIONS AND CHANGES CASES FOR SITUATION
       switch (respond.action) {
         case "View all employees":
+          showEmployees();
           break;
         case "View all departments":
           showDepartments();
